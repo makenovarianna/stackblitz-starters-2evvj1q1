@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="ru">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+  <title>
+   ComicBox — Autumn Stories
+  </title>
+  <style>
+   @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap");
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+:root {
+  --bg:#21151a;
+  --bg2:#302027;
+  --card:#3b2528;
+  --card2:#4a2d2d;
+  --text:#f8ead3;
+  --muted:#d5bfa6;
+  --accent:#e5a45b;
+  --accent2:#c75b3c;
+  --line:rgba(255,230,190,.14);
+  --shadow:rgba(0,0,0,.35);
+}
+body.light-theme {
+  --bg:#f3e4d0;
+  --bg2:#ead0b6;
+  --card:#fff8ed;
+  --card2:#f8ead9;
+  --text:#3a2521;
+  --muted:#73584c;
+  --accent:#a94f32;
+  --accent2:#d98945;
+  --line:rgba(90,50,35,.15);
+  --shadow:rgba(90,50,35,.18);
+}
+html {
+  scroll-behavior:smooth;
+}
+body {
+  min-height:100vh;
+  background:radial-gradient(circle at 15% 10%,var(--bg2),transparent 35%),var(--bg);
+  color:var(--text);
+  font-family:Oswald,Arial,sans-serif;
+  transition:.45s;
+}
+body:before {
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.12;
+  background-image:radial-gradient(circle,#fff 1px,transparent 1px);
+  background-size:28px 28px;
+}
+header {
+  max-width:1180px;
+  margin:auto;
+  padding:55px 25px 35px;
+  text-align:center;
+  position:relative;
+}
+.badge {
+  display:inline-block;
+  padding:8px 15px;
+  border:1px solid var(--accent);
+  border-radius:30px;
+  color:var(--accent);
+  letter-spacing:2px;
+  font-size:13px;
+}
+h1 {
+  font-family:"Playfair Display",serif;
+  font-size:clamp(55px,9vw,105px);
+  line-height:.9;
+  margin:18px 0;
+  color:var(--accent);
+}
+.slogan {
+  font-size:20px;
+  color:var(--muted);
+  max-width:650px;
+  margin:auto;
+}
+.theme-toggle-container {
+  position:absolute;
+  right:25px;
+  top:25px;
+}
+button,.button {
+  border:1px solid var(--accent);
+  background:var(--card);
+  color:var(--text);
+  padding:11px 17px;
+  border-radius:18px;
+  cursor:pointer;
+  font-family:inherit;
+  transition:.25s;
+}
+button:hover,.button:hover {
+  background:var(--accent);
+  color:#251719;
+  transform:translateY(-2px);
+}
+main {
+  width:min(1150px,92%);
+  margin:15px auto 65px;
+}
+.section-title {
+  font-family:"Playfair Display",serif;
+  font-size:30px;
+  margin:35px 0 18px;
+  color:var(--accent);
+}
+.stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.stat,.card {
+  background:linear-gradient(145deg,var(--card),var(--card2));
+  border:1px solid var(--line);
+  box-shadow:0 12px 30px var(--shadow);
+  transition:.35s;
+}
+.stat {
+  border-radius:25px;
+  padding:25px;
+}
+.stat:hover,.card:hover {
+  transform:translateY(-6px);
+}
+.stat strong {
+  display:block;
+  font-size:38px;
+  color:var(--accent);
+}
+.stat span {
+  color:var(--muted);
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+.card {
+  border-radius:28px;
+  padding:22px;
+  min-height:425px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.card-img {
+  height:155px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:-5px -5px 12px;
+}
+.card-img img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 9px 8px rgba(0,0,0,.22));
+  transition:.35s;
+}
+.card:hover img {
+  transform:scale(1.08) rotate(2deg);
+}
+.number {
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--accent2);
+  color:#fff;
+  font-weight:bold;
+  margin-bottom:13px;
+}
+.card h2 {
+  font-family:"Playfair Display",serif;
+  font-size:25px;
+  color:var(--accent);
+  margin-bottom:10px;
+}
+.card p {
+  font-family:Arial,sans-serif;
+  line-height:1.55;
+  color:var(--muted);
+  flex:1;
+}
+.button {
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  margin-top:18px;
+  font-weight:bold;
+}
+.create {
+  grid-column:span 3;
+  min-height:280px;
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  align-items:center;
+  gap:25px;
+}
+.big-icon {
+  font-size:90px;
+  text-align:center;
+}
+form {
+  display:grid;
+  gap:10px;
+}
+input,textarea,select {
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+  background:var(--bg);
+  color:var(--text);
+  font:inherit;
+}
+textarea {
+  min-height:100px;
+  resize:vertical;
+}
+footer {
+  background:var(--card);
+  border-radius:35px 35px 0 0;
+  padding:30px;
+  text-align:center;
+  color:var(--muted);
+}
+footer a {
+  color:var(--accent);
+  margin:0 8px;
+  text-decoration:none;
+}
+#toast {
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translate(-50%,20px);
+  background:var(--card);
+  border:1px solid var(--accent);
+  padding:14px 20px;
+  border-radius:15px;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:20;
+}
+#toast.show {
+  opacity:1;
+  transform:translate(-50%,0);
+}
+#top {
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#251719;
+  border:0;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(12px);
+  transition:opacity .3s ease, visibility .3s ease, transform .3s ease;
+}
+
+#top.show {
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+@media(max-width:850px) {
+  .grid,.stats {
+    grid-template-columns:1fr;
+  }
+  .create {
+    grid-column:auto;
+    grid-template-columns:1fr;
+  }
+  .theme-toggle-container {
+    position:static;
+    margin-bottom:15px;
+  }
+}
+  </style>
+ </head>
+ <body>
+  <header>
+   <div class="theme-toggle-container">
+    <button id="themeToggle">
+     ☀️ Светлая тема
+    </button>
+   </div>
+   <div class="badge">
+    OMG COMICS • AUTUMN EDITION
+   </div>
+   <h1>
+    ComicBox
+   </h1>
+   <p class="slogan">
+    Уютное место для комиксов, новых историй и осеннего вдохновения 🍂
+   </p>
+  </header>
+  <main>
+   <h2 class="section-title">
+    Наша коллекция
+   </h2>
+   <section class="stats">
+    <div class="stat">
+     <strong>
+      128 640
+     </strong>
+     <span>
+      комиксов в коллекции
+     </span>
+    </div>
+    <div class="stat">
+     <strong>
+      3 870
+     </strong>
+     <span>
+      опубликовано недавно
+     </span>
+    </div>
+    <div class="stat">
+     <strong>
+      24 915
+     </strong>
+     <span>
+      историй создано читателями
+     </span>
+    </div>
+   </section>
+   <h2 class="section-title">
+    Что можно сделать?
+   </h2>
+   <section class="grid">
+    <article class="card">
+     <div class="card-img">
+   
+     </div>
+     <div class="number">
+      01
+     </div>
+     <h2>
+      Обсуждение
+     </h2>
+     <p>
+      Делитесь впечатлениями, обсуждайте любимых героев, теории и неожиданные повороты вместе с другими читателями.
+     </p>
+     <a class="button" href="#" onclick="toast('Раздел «Обсуждение» открыт! 🍂');return false">
+      Обсудить
+     </a>
+    </article>
+    <article class="card">
+     <div class="card-img">
+      
+     </div>
+     <div class="number">
+      02
+     </div>
+     <h2>
+      Новинки авторов
+     </h2>
+     <p>
+      Каждый день появляются новые главы и выпуски. Сейчас недавно опубликовано 3 870 новых историй разных жанров.
+     </p>
+     <a class="button" href="#" onclick="toast('Раздел «Новинки авторов» открыт! 🍂');return false">
+      Смотреть
+     </a>
+    </article>
+    <article class="card">
+     <div class="card-img">
+  
+     </div>
+     <div class="number">
+      03
+     </div>
+     <h2>
+      Комиксы по вкусу
+     </h2>
+     <p>
+      Выбирайте настроение и жанр: романтика, фэнтези, хоррор, приключения, юмор или повседневность.
+     </p>
+     <a class="button" href="#" onclick="toast('Раздел «Комиксы по вкусу» открыт! 🍂');return false">
+      Выбрать
+     </a>
+    </article>
+    <article class="card">
+     <div class="card-img">
+  
+     </div>
+     <div class="number">
+      04
+     </div>
+     <h2>
+      Читать вечером
+     </h2>
+     <p>
+      Соберите личную коллекцию историй и возвращайтесь к ним с чашкой горячего напитка. Идеально для спокойного вечера.
+     </p>
+     <a class="button" href="#" onclick="toast('Раздел «Читать вечером» открыт! 🍂');return false">
+      Добавить
+     </a>
+    </article>
+    <article class="card">
+     <div class="card-img">
+
+     </div>
+     <div class="number">
+      05
+     </div>
+     <h2>
+      Избранное
+     </h2>
+     <p>
+      Сохраняйте любимые выпуски, чтобы не потерять их. Соберите собственную маленькую библиотеку.
+     </p>
+     <a class="button" href="#" onclick="toast('Раздел «Избранное» открыт! 🍂');return false">
+      Сохранить
+     </a>
+    </article>
+    <article class="card">
+     <div class="card-img">
+
+     </div>
+     <div class="number">
+      06
+     </div>
+     <h2>
+      Осенний вайб
+     </h2>
+     <p>
+      Подборка историй с дождём, жёлтыми листьями, уютными домами и тёплыми персонажами.
+     </p>
+     <a class="button" href="#" onclick="toast('Раздел «Осенний вайб» открыт! 🍂');return false">
+      Открыть
+     </a>
+    </article>
+    <article class="card create">
+     <div class="big-icon">
+      ✍️🍁
+     </div>
+     <div>
+      <div class="number">
+       07
+      </div>
+      <h2>
+       Написать свою историю
+      </h2>
+      <p>
+       Придумай собственный комикс прямо на сайте: выбери название, жанр и коротко расскажи, о чём будет твоя история.
+      </p>
+      <form id="storyForm">
+       <input id="storyTitle" placeholder="Название истории" required=""/>
+       <select>
+        <option>
+         Романтика
+        </option>
+        <option>
+         Фэнтези
+        </option>
+        <option>
+         Хоррор
+        </option>
+        <option>
+         Приключения
+        </option>
+        <option>
+         Комедия
+        </option>
+       </select>
+       <textarea placeholder="Напиши идею своей истории..." required=""></textarea>
+       <button type="submit">
+        Опубликовать идею
+       </button>
+      </form>
+     </div>
+    </article>
+   </section>
+  </main>
+  <footer>
+   <p>
+    ComicBox — место, где осеннее настроение превращается в истории 🍂
+   </p>
+   <div>
+    <a href="#">
+     VK
+    </a>
+    <a href="#">
+     Telegram
+    </a>
+    <a href="#">
+     Instagram
+    </a>
+    <a href="[mailto:support@comics.ru](mailto:support@comics.ru)">
+     Техподдержка
+    </a>
+   </div>
+  </footer>
+  <div id="toast">
+  </div>
+  <button id="top">
+   ↑
+  </button>
+  <script>
+   const body = document.body;
+const themeToggle = document.getElementById("themeToggle");
+const topButton = document.getElementById("top");
+const savedTheme = localStorage.getItem("comic-theme");
+
+function applyTheme(isLight) {
+  body.classList.toggle("light-theme", isLight);
+
+  themeToggle.textContent = isLight
+    ? "🌙 Тёмная тема"
+    : "☀️ Светлая тема";
+
+  localStorage.setItem(
+    "comic-theme",
+    isLight ? "light" : "dark"
+  );
+}
+
+applyTheme(savedTheme === "light");
+
+themeToggle.addEventListener("click", () => {
+  applyTheme(!body.classList.contains("light-theme"));
+});
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
+}
+
+document.getElementById("storyForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  showToast("История сохранена как идея! ✨");
+  event.target.reset();
+});
+
+function updateTopButton() {
+  if (window.scrollY > 300) {
+    topButton.classList.add("show");
+  } else {
+    topButton.classList.remove("show");
+  }
+}
+
+window.addEventListener("scroll", updateTopButton, {
+  passive: true
+});
+
+topButton.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+
+updateTopButton();
+  </script>
+ </body>
+</html>
+
